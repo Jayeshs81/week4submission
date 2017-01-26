@@ -1,0 +1,59 @@
+---
+title: "Week 4 Submission"
+author: "Jayesh Samant"
+date: "January 25, 2017"
+output: ioslides_presentation
+---
+
+```{r, echo=FALSE, warning=FALSE, error=FALSE, message=FALSE}
+library(datasets)
+library(ggplot2)
+library(reshape2)
+library(dplyr)
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Objective
+
+The Objective of this application is to diagramatically display the growth of phone usage in the different geographic regions between 1951 and 1961.
+
+For this purpose we use the WorldPhones dataset.
+```{r}
+WorldPhones
+```
+
+WorldPhones provides information about the number of phones in the different regions and years in a matrix form.
+
+## How to Use
+
+The Shiny app can be accessed here - http://jayeshs81.shinyapps.io/Week4Submission
+
+Our Shiny app, allows you to plot the # of phone depending on which years and regions you are interested in. 
+
+To use the Shiny app:  
+- Select the Region(s) which you want to display in the plot   
+- Select the Year(s) which you want to display in the plot
+
+On changing the selection of the region or the year check boxes a new plot is created in the main panel.
+
+## Displayed Plot
+
+The plot displat a dodged bar plot of the number of phones for each of the selected years and region. A plot for all regions and years selected is shown below.
+
+```{r, echo=FALSE}
+# Format the WorldPhones data for processing
+melted <- melt(WorldPhones)
+names(melted) <- c("Year", "Region", "Count")
+melted$Year <- as.factor(melted$Year)
+    
+# Plot the selected data
+g <- ggplot(data = melted, aes(x = Year, y = Count))
+g <- g + geom_bar(aes(fill = Region), position = "dodge", stat = "identity")
+g <- g + xlab("Year") + ylab("# of Phones") 
+g
+```
+
+## Hope you enjoy the app!!
